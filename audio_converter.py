@@ -6,35 +6,29 @@ from pydub import AudioSegment
 import tkinter as tk
 import tkinter.messagebox as messagebox
 
-file_path=""
-file_name=""
-file_ext=""
+file_path = file_name = file_ext=""
 
-def listToString(s):  
-	str1 = ""  
-	for ele in s:  
-		str1 += ele   
-	return str1  
+def listToString(array):  
+	string = ""  
+	for character in array:  
+		string += character   
+	return string  
 
 def get_filename(filename_label,convert_butt): 
-	global file_path
-	global file_name
-	global file_ext
-	file_path = askopenfilename(filetypes=(('MP3','*.mp3'),('M4A','*.m4a')))
+	global file_path, file_name, file_ext
+	file_path = askopenfilename(filetypes=(('M4A','*.m4a'),('MP3','*.mp3')))
 	file_name=file_path.split("/")[-1]
 	file_ext = file_name.split(".")[-1]
 	file_name=file_name.split(".")
 	file_name.pop()
 	file_name = listToString(file_name)
 	messagebox.showinfo("Info","Audio File Selected : "+file_path)
-	filename_label.config(text = 'Filename : '+file_name)
+	filename_label.config(text = 'Filename : '+file_path)
 	convert_butt["state"]=tk.NORMAL
 
 def convert(spinner,convert_butt):
 	convert_butt["state"]=tk.DISABLED
-	global file_path
-	global file_name
-	global file_ext
+	global file_path, file_name, file_ext
 	try :
 		volume = int(spinner.get())
 	except:
@@ -60,7 +54,7 @@ def convert(spinner,convert_butt):
 
 root = Tk() 
 root.title('Audio Converter')
-root.geometry('300x300') 
+root.geometry('300x250') 
 filename_label = tk.Label(root, text="Filename : ")
 spinner_label = tk.Label(root, text="Select Decibel Value Below : ")
 spinner = Spinbox(root, from_=5, to=150)
